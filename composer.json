@@ -1,5 +1,5 @@
 {
-	"name" : "{{vendor}}/yii2-{{package}}",
+	"name" : "alperenbugaz/yii2-todo",
 	"description" : "{{package}} Module for Portalium (Yii2)",
 	"type" : "portalium-module",
 	"license": "MIT",
@@ -12,11 +12,11 @@
 		}
 	],
 	"support" : {
-		"issues" : "https://github.com/{{vendor}}/yii2-{{package}}/issues"
+		"issues" : "https://github.com/alperenbugaz/yii2-todo/issues"
 	},
 	"autoload" : {
 		"psr-4" : {
-			"{{vendor}}\\{{package}}\\" : "src/"
+			"alperenbugaz\\todo\\" : "src/"
 		}
 	}
 }

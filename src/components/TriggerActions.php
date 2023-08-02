@@ -1,6 +1,6 @@
 <?php
 
-namespace {{vendor}}\{{package}}\components;
+namespace alperenbugaz\todo\components;
 
 use Yii;
 use yii\base\BaseObject;
