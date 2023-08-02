@@ -1,37 +1,37 @@
 <?php
 
-namespace {{vendor}}\{{package}};
+namespace alperenbugaz\todo;
 
 use portalium\base\Event;
-use {{vendor}}\{{package}}\components\TriggerActions;
+use alperenbugaz\todo\components\TriggerActions;
 
 class Module extends \portalium\base\Module
 {
-    public static $tablePrefix = '{{package}}_';
+    public static $tablePrefix = 'todo_';
     
-    public static $name = '{{package}}';
+    public static $name = 'todo';
 
-    public static $description = '{{package}} Module';
+    public static $description = 'todo Module';
 
     public $apiRules = [
         [
             'class' => 'yii\rest\UrlRule',
             'controller' => [
-                '{{package}}/default',
+                'todo/default',
             ]
         ],
     ];
     
     public static function moduleInit()
     {
-        self::registerTranslation('{{package}}','@{{vendor}}/{{package}}/messages',[
-            '{{package}}' => '{{package}}.php',
+        self::registerTranslation('todo','@alperenbugaz/todo/messages',[
+            'todo' => 'todo.php',
         ]);
     }
 
     public static function t($message, array $params = [])
     {
-        return parent::coreT('{{package}}', $message, $params);
+        return parent::coreT('todo', $message, $params);
     }
 
     /* 
