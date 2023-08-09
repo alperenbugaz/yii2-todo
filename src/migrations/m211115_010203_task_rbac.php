@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 class m211115_010203_task_rbac extends Migration
-{
+{/*
     public function up()
     {
         $auth = \Yii::$app->authManager;
@@ -149,5 +149,5 @@ class m211115_010203_task_rbac extends Migration
         $auth->remove($auth->getPermission('contentApiDefaultDelete'));
         $auth->remove($auth->getPermission('contentWebDefaultPreview'));
         $auth->remove($auth->getPermission('contentApiDefaultIndex'));
-    }
+    } */
 }
