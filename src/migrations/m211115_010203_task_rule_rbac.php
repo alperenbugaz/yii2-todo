@@ -4,7 +4,7 @@ use portalium\content\rbac\OwnRule;
 use yii\db\Migration;
 
 class m211115_010203_task_rule_rbac extends Migration
-{
+{/*
     public function up()
     {
         $auth = \Yii::$app->authManager;
@@ -201,5 +201,5 @@ class m211115_010203_task_rule_rbac extends Migration
         $auth->remove($auth->getPermission('contentOwnApiDefaultDelete'));
         $auth->remove($auth->getPermission('contentOwnWebDefaultPreview'));
         $auth->remove($auth->getPermission('contentOwnApiDefaultIndex'));
-    }
+    } */
 }
