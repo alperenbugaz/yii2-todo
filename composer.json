@@ -27,7 +27,6 @@
 		"portalium/yii2-composer": "*",
 		"portalium/yii2-bootstrap5": "*",
 		"portalium/yii2-core": "*",
-
 		"portalium/yii2-rbac": "*",
 		"portalium/yii2-theme": "*",
 		"portalium/yii2-menu": "*",
