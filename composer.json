@@ -18,5 +18,9 @@
 		"psr-4" : {
 			"alperenbugaz\\todo\\" : "src/"
 		}
-	}
+	},
+	"require" : {
+	"portalium/yii2-user" : "*",
+	"portalium/yii2-site" : "*"
+}
 }
