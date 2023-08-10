@@ -2,6 +2,7 @@
 
 namespace portalium\todo\models;
 
+use portalium\content\Module;
 use Yii;
 use portalium\user\models\User;
 use portalium\workspace\models\Workspace;
@@ -17,12 +18,16 @@ use portalium\workspace\models\Workspace;
  * @property int $id_workspace
  * @property string $date_create
  * @property string $date_update
- *
  * @property User $user
  * @property Workspace $workspace
  */
 class Task extends \yii\db\ActiveRecord
 {
+    const STATUS = [
+        'not_completed' => 0,
+        'completed' => 1,
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -62,7 +67,17 @@ class Task extends \yii\db\ActiveRecord
             'date_update' => 'Date Update',
         ];
     }
+    public static function getStatusList()
+    {
+        //return value and label
+        return [
+            'STATUS' => [
+                self::STATUS['not_completed'] => Module::t('Not Completed'),
+                self::STATUS['completed'] => Module::t('Completed'),
 
+            ],
+        ];
+    }
     /**
      * Gets query for [[User]].
      *
@@ -72,7 +87,12 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id_user' => 'id_user']);
     }
-
+    public static function getIndexTitle()
+    {
+        // Başlığı veritabanından çekerek döndürün
+        $indexTitle = self::find()->select('title')->one();
+        return $indexTitle;
+    }
     /**
      * Gets query for [[Workspace]].
      *

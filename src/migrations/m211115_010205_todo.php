@@ -19,7 +19,7 @@ class m211115_010205_todo extends Migration
                 'id_task'=> $this->primaryKey(),
                 'title'=> $this->string(255),
                 'description'=>$this->string(),
-                'status'=>$this->integer(),
+                'status'=> $this->smallInteger(6)->notNull(),
                 'id_user'=>$this->integer()->notNull(),
                 'id_workspace'=>$this->integer(11)->notNull(),
                 'date_create'=> $this->datetime()->notNull()->defaultExpression("CURRENT_TIMESTAMP"),

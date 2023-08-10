@@ -3,10 +3,11 @@
 use portalium\todo\models\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use portalium\theme\widgets\ActionColumn;
+use portalium\theme\widgets\GridView;
+use portalium\theme\widgets\Panel;
+use portalium\content\Module;
 
-/** @var yii\web\View $this */
 /** @var portalium\todo\models\TaskSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
@@ -15,11 +16,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="task-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php Panel::begin([
+        'title' => Module::t('Tasks'),
+        'actions' => [
+            Html::a(Module::t(''), ['create'], ['class' => 'btn btn-success fa fa-plus'])
+        ]
+    ]) ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Task'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -29,22 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_task',
+            //'id_task',
             'title',
-            'description',
-            'status',
+           // 'description',
+           // 'status',
             'id_user',
             //'id_workspace',
             //'date_create',
             //'date_update',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Task $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id_task' => $model->id_task]);
-                 }
-            ],
+            ['class' => ActionColumn::class],
         ],
-    ]); ?>
+    ]); Panel::end()?>
 
 
 </div>
