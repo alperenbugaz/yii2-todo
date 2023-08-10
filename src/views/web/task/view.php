@@ -1,43 +1,50 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
+use portalium\theme\widgets\DetailView;
+use portalium\todo\models\Task;
+use portalium\content\Module;
+use portalium\theme\widgets\Panel;
 /** @var yii\web\View $this */
 /** @var portalium\todo\models\Task $model */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tasks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="task-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id_task' => $model->id_task], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id_task' => $model->id_task], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
+    <?php Panel::begin([
+        'title' => $this->title,
+        'actions' => [
+            Html::a(Module::t(''), ['update', 'id' => $model->id_task], ['class' => 'btn btn-primary fa fa-pencil']),
+            Html::a(Module::t(''), ['delete', 'id' => $model->id_task], [
+                'class' => 'btn btn-danger fa fa-trash',
+                'data' => [
+                    'confirm' => Module::t('Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ])
+        ]
+    ]) ?>
     <?= DetailView::widget([
+
         'model' => $model,
         'attributes' => [
-            'id_task',
+            //'id_task',
             'title',
-            'description',
-            'status',
-            'id_user',
-            'id_workspace',
+         //   'description',
+            [
+                'attribute' => 'status',
+                'value' => Task::getStatusList()['STATUS'][$model->status],
+            ],
+            'user.username', //todo_task tablosundaki id_useri, user_user tablosundaki id_userle eşleştririp username i çeker.
+           // 'id_workspace',
             'date_create',
             'date_update',
         ],
-    ]) ?>
+    ]); Panel::end() ?>
 
 </div>

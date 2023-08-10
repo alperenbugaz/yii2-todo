@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
+use portalium\theme\widgets\ActiveForm;
+use portalium\todo\models\Task;
+use portalium\theme\widgets\Panel;
+use portalium\content\Module;
 /** @var yii\web\View $this */
 /** @var portalium\todo\models\Task $model */
 /** @var yii\widgets\ActiveForm $form */
@@ -12,20 +14,29 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php Panel::begin([
+        'title' => Html::encode($this->title),
+        'actions' => [
+            'header' => [
+            ],
+            'footer' => [
+                Html::submitButton(Module::t( 'Save'), ['class' => 'btn btn-success']),
+            ]
+        ],
+    ]) ?>
+
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'id_user')->textInput() ?>
-
-    <?= $form->field($model, 'id_workspace')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(Task::getStatusList()['STATUS']) ?>
 
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
+
+
+
+
+
+    <?php Panel::end() ?>
 
     <?php ActiveForm::end(); ?>
 
