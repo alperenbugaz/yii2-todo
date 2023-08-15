@@ -3,7 +3,7 @@
 namespace portalium\todo\controllers\web;
 use Yii;
 use portalium\content\Module;
-use portalium\todo\models\Task; //??
+use portalium\todo\models\Task;
 use portalium\todo\models\TaskSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -49,8 +49,8 @@ class TaskController extends WebController
      */
     public function actionIndex()
     {
-        if (!\Yii::$app->user->can('todoWebtaskIndex') && !\Yii::$app->user->can('todoWebtaskIndexOwn'))
-            //Kullanıcıya "todoWebtaskIndex" veya "todoWebtaskIndexOwn" yetkilerinden herhangi biri verilmemişse,hata fırlatılır.
+        if (!\Yii::$app->user->can('todoWebtaskIndexOwn'))
+            //Kullanıcıya "contentWebCategoryIndex" veya "contentWebCategoryIndexOwn" yetkilerinden herhangi biri verilmemişse,hata fırlatılır.
         {
             throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
         }
@@ -72,14 +72,15 @@ class TaskController extends WebController
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id_task)
     {
+        $model = $this->findModel($id_task);
 
-        if (!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id)])&&!\Yii::$app->user->can('todoWebtaskViewOwn', ['model'=>$this->findModel($id)])) {
+        if ($model &&!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id_task)])) {
             throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
         }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id_task),
         ]);
     }
 
@@ -100,7 +101,7 @@ class TaskController extends WebController
             $model ->id_workspace=Yii::$app->workspace->id;//id_workspace field dolduran kişinin id_workspaces'ı olmasını sağlar
 
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_task]);
+                return $this->redirect(['view', 'id_task' => $model->id_task]);
             }
             var_dump($model->errors);
             exit(); // hata yazdırma fonksiyonu
@@ -124,13 +125,12 @@ class TaskController extends WebController
     public function actionUpdate($id)
     {
         if (!\Yii::$app->user->can('todoWebtaskUpdate', ['model'=>$this->findModel($id)])) {
-        throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
-    }
+            throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
+        }
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->addFlash('success', Module::t('Category has been updated'));
-            return $this->redirect(['view', 'id' => $model->id_task]);
+            return $this->redirect(['view', 'id_task' => $model->id_task]);
         }
 
         return $this->render('update', [
