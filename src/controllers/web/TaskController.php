@@ -72,15 +72,15 @@ class TaskController extends WebController
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id_task)
+    public function actionView($id)
     {
-        $model = $this->findModel($id_task);
+        $model = $this->findModel($id);
 
-        if ($model &&!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id_task)])) {
+        if ($model &&!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id)])) {
             throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
         }
         return $this->render('view', [
-            'model' => $this->findModel($id_task),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -101,7 +101,7 @@ class TaskController extends WebController
             $model ->id_workspace=Yii::$app->workspace->id;//id_workspace field dolduran kişinin id_workspaces'ı olmasını sağlar
 
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id_task' => $model->id_task]);
+                return $this->redirect(['view', 'id' => $model->id_task]);
             }
             var_dump($model->errors);
             exit(); // hata yazdırma fonksiyonu
@@ -130,7 +130,7 @@ class TaskController extends WebController
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_task' => $model->id_task]);
+            return $this->redirect(['view', 'id' => $model->id_task]);
         }
 
         return $this->render('update', [
