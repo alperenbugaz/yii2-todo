@@ -13,6 +13,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $auth->add($rule);
         $role = \Yii::$app->setting->getValue('site::admin_role');
         $admin = (isset($role) && $role != '') ? $auth->getRole($role) : $auth->getRole('admin');
+        $user = $auth->getRole('user');
+
 
 
 
@@ -20,20 +22,25 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoWebtaskIndexOwn->description = 'todo Web taskIndexOwn';
         $auth->add($todoWebtaskIndexOwn);
         $auth->addChild($admin, $todoWebtaskIndexOwn);
+        $auth->addChild($user, $todoWebtaskIndexOwn); // user rolüne indexi görüntüleme izni ekle
 
         $todoWebtaskViewOwn = $auth->createPermission('todoWebtaskViewOwn');
         $todoWebtaskViewOwn->description = 'todo Web taskViewOwn';
         $todoWebtaskViewOwn->ruleName = $rule->name;
         $auth->add($todoWebtaskViewOwn);
         $auth->addChild($admin, $todoWebtaskViewOwn);
+        $auth->addChild($user, $todoWebtaskViewOwn);
+
         $todoWebtaskView = $auth->getPermission('todoWebtaskView');
         $auth->addChild($todoWebtaskViewOwn, $todoWebtaskView);
 
         $todoWebtaskCreateOwn = $auth->createPermission('todoWebtaskCreateOwn');
         $todoWebtaskCreateOwn->description = 'todoWeb taskCreateOwn';
-        $todoWebtaskCreateOwn->ruleName = $rule->name;
+
         $auth->add($todoWebtaskCreateOwn);
         $auth->addChild($admin, $todoWebtaskCreateOwn);
+        $auth->addChild($user, $todoWebtaskCreateOwn);
+
         $todoWebtaskCreate = $auth->getPermission('todoWebtaskCreate');
         $auth->addChild($todoWebtaskCreateOwn, $todoWebtaskCreate);
 
@@ -42,6 +49,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoWebtaskUpdateOwn->ruleName = $rule->name;
         $auth->add($todoWebtaskUpdateOwn);
         $auth->addChild($admin, $todoWebtaskUpdateOwn);
+        $auth->addChild($user, $todoWebtaskUpdateOwn);
+
         $todoWebtaskUpdate = $auth->getPermission('todoWebtaskUpdate');
         $auth->addChild($todoWebtaskUpdateOwn, $todoWebtaskUpdate);
 
@@ -50,6 +59,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoWebtaskDeleteOwn->ruleName = $rule->name;
         $auth->add($todoWebtaskDeleteOwn);
         $auth->addChild($admin, $todoWebtaskDeleteOwn);
+        $auth->addChild($user, $todoWebtaskDeleteOwn);
+
         $todoWebtaskDelete = $auth->getPermission('todoWebtaskDelete');
         $auth->addChild($todoWebtaskDeleteOwn, $todoWebtaskDelete);
 
@@ -60,6 +71,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoApitaskViewOwn->ruleName = $rule->name;
         $auth->add($todoApitaskViewOwn);
         $auth->addChild($admin, $todoApitaskViewOwn);
+        $auth->addChild($user, $todoApitaskViewOwn);
+
         $todoApitaskView = $auth->getPermission('todoApitaskView');
         $auth->addChild($todoApitaskViewOwn, $todoApitaskView);
 
@@ -68,6 +81,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoApitaskCreateOwn->ruleName = $rule->name;
         $auth->add($todoApitaskCreateOwn);
         $auth->addChild($admin, $todoApitaskCreateOwn);
+        $auth->addChild($user, $todoApitaskCreateOwn);
+
         $todoApitaskCreate = $auth->getPermission('todoApitaskCreate');
         $auth->addChild($todoApitaskCreateOwn, $todoApitaskCreate);
 
@@ -76,6 +91,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoApitaskUpdateOwn->ruleName = $rule->name;
         $auth->add($todoApitaskUpdateOwn);
         $auth->addChild($admin, $todoApitaskUpdateOwn);
+        $auth->addChild($user, $todoApitaskUpdateOwn);
+
         $todoApitaskUpdate = $auth->getPermission('todoApitaskUpdate');
         $auth->addChild($todoApitaskUpdateOwn, $todoApitaskUpdate);
 
@@ -84,6 +101,8 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoApitaskDeleteOwn->ruleName = $rule->name;
         $auth->add($todoApitaskDeleteOwn);
         $auth->addChild($admin, $todoApitaskDeleteOwn);
+        $auth->addChild($user, $todoApitaskDeleteOwn);
+
         $todoApitaskDelete = $auth->getPermission('todoApitaskDelete');
         $auth->addChild($todoApitaskDeleteOwn, $todoApitaskDelete);
 
@@ -91,7 +110,18 @@ class m211115_010203_task_rule_rbac extends Migration
         $todoApitaskIndexOwn->description = 'todo Api task Index Own';
         $auth->add($todoApitaskIndexOwn);
         $auth->addChild($admin, $todoApitaskIndexOwn);
-
+        $auth->addChild($user, $todoApitaskIndexOwn);
+        /*
+        $auth->addChild($user, $todoWebtaskIndexOwn);
+        $auth->addChild($user, $todoWebtaskViewOwn);
+        $auth->addChild($user, $todoWebtaskCreateOwn);
+        $auth->addChild($user, $todoWebtaskUpdateOwn);
+        $auth->addChild($user, $todoWebtaskDeleteOwn);
+        $auth->addChild($user, $todoApitaskViewOwn);
+        $auth->addChild($user, $todoApitaskCreateOwn);
+        $auth->addChild($user, $todoApitaskUpdateOwn);
+        $auth->addChild($user, $todoApitaskDeleteOwn);
+        $auth->addChild($user, $todoApitaskIndexOwn); */
     }
 
     public function down()

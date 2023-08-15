@@ -75,7 +75,7 @@ class TaskController extends WebController
     public function actionView($id)
     {
 
-        if (!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id)])) {
+        if (!\Yii::$app->user->can('todoWebtaskView', ['model'=>$this->findModel($id)])&&!\Yii::$app->user->can('todoWebtaskViewOwn', ['model'=>$this->findModel($id)])) {
             throw new \yii\web\ForbiddenHttpException(Module::t('You are not allowed to access this page.'));
         }
         return $this->render('view', [
