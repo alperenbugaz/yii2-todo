@@ -13,16 +13,16 @@ class m211115_010203_task_rule_rbac extends Migration
         $auth->add($rule);
         $role = \Yii::$app->setting->getValue('site::admin_role');
         $admin = (isset($role) && $role != '') ? $auth->getRole($role) : $auth->getRole('admin');
-        $user = $auth->getRole('user');
+        $user = $auth->getRole('user'); //user değişkenine user rolü atıyor
 
 
 
 
-        $todoWebtaskIndexOwn = $auth->createPermission('todoWebtaskIndexOwn');
+        $todoWebtaskIndexOwn = $auth->createPermission('todoWebtaskIndexOwn');//"todoWebtaskIndexOwn" adında bir izin nesnesi oluşturur
         $todoWebtaskIndexOwn->description = 'todo Web taskIndexOwn';
-        $auth->add($todoWebtaskIndexOwn);
-        $auth->addChild($admin, $todoWebtaskIndexOwn);
-        $auth->addChild($user, $todoWebtaskIndexOwn); // user rolüne indexi görüntüleme izni ekle
+        $auth->add($todoWebtaskIndexOwn);//Oluşturulan izin nesnesini yetkilendirme sistemi içinde kaydeder
+        $auth->addChild($admin, $todoWebtaskIndexOwn);//"admin" adında bir rol ile "todoWebtaskIndexOwn" iznini ilişkilendirir. Yani, "admin" rolü bu izne sahip olur.
+        $auth->addChild($user, $todoWebtaskIndexOwn); //"user" adında bir rol ile "todoWebtaskIndexOwn" iznini ilişkilendirir. Yani, "admin" rolü bu izne sahip olur.
 
         $todoWebtaskViewOwn = $auth->createPermission('todoWebtaskViewOwn');
         $todoWebtaskViewOwn->description = 'todo Web taskViewOwn';
@@ -111,17 +111,7 @@ class m211115_010203_task_rule_rbac extends Migration
         $auth->add($todoApitaskIndexOwn);
         $auth->addChild($admin, $todoApitaskIndexOwn);
         $auth->addChild($user, $todoApitaskIndexOwn);
-        /*
-        $auth->addChild($user, $todoWebtaskIndexOwn);
-        $auth->addChild($user, $todoWebtaskViewOwn);
-        $auth->addChild($user, $todoWebtaskCreateOwn);
-        $auth->addChild($user, $todoWebtaskUpdateOwn);
-        $auth->addChild($user, $todoWebtaskDeleteOwn);
-        $auth->addChild($user, $todoApitaskViewOwn);
-        $auth->addChild($user, $todoApitaskCreateOwn);
-        $auth->addChild($user, $todoApitaskUpdateOwn);
-        $auth->addChild($user, $todoApitaskDeleteOwn);
-        $auth->addChild($user, $todoApitaskIndexOwn); */
+
     }
 
     public function down()

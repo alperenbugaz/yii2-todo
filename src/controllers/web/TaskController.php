@@ -2,7 +2,7 @@
 
 namespace portalium\todo\controllers\web;
 use Yii;
-use portalium\content\Module;
+use alperenbugaz\todo\Module;
 use portalium\todo\models\Task;
 use portalium\todo\models\TaskSearch;
 use yii\web\NotFoundHttpException;
@@ -57,7 +57,7 @@ class TaskController extends WebController
         $searchModel = new TaskSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         if(!\Yii::$app->user->can('todoWebtaskIndex'))
-            $dataProvider->query->andWhere(['id_user'=>\Yii::$app->user->id]);
+            $dataProvider->query->andWhere([Module::$tablePrefix . 'task.id_user'=>\Yii::$app->user->id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
