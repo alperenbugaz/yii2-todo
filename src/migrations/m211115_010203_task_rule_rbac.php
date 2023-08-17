@@ -1,10 +1,10 @@
 <?php
 
-use portalium\content\rbac\OwnRule;
+use alperenbugaz\todo\rbac\OwnRule;
 use yii\db\Migration;
 
 class m211115_010203_task_rule_rbac extends Migration
-{/*
+{
     public function up()
     {
         $auth = \Yii::$app->authManager;
@@ -13,170 +13,104 @@ class m211115_010203_task_rule_rbac extends Migration
         $auth->add($rule);
         $role = \Yii::$app->setting->getValue('site::admin_role');
         $admin = (isset($role) && $role != '') ? $auth->getRole($role) : $auth->getRole('admin');
+        $user = $auth->getRole('user'); //user değişkenine user rolü atıyor
 
-        $contentWebDefaultIndexOwn = $auth->createPermission('contentWebDefaultIndexOwn');
-        $contentWebDefaultIndexOwn->description = 'Content Web DefaultIndexOwn';
-        $auth->add($contentWebDefaultIndexOwn);
-        $auth->addChild($admin, $contentWebDefaultIndexOwn);
 
-        $contentWebDefaultViewOwn = $auth->createPermission('contentWebDefaultViewOwn');
-        $contentWebDefaultViewOwn->description = 'Content Web DefaultViewOwn';
-        $contentWebDefaultViewOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultViewOwn);
-        $auth->addChild($admin, $contentWebDefaultViewOwn);
-        $contentWebDefaultView = $auth->getPermission('contentWebDefaultView');
-        $auth->addChild($contentWebDefaultViewOwn, $contentWebDefaultView);
 
-        $contentWebDefaultCreateOwn = $auth->createPermission('contentWebDefaultCreateOwn');
-        $contentWebDefaultCreateOwn->description = 'Content Web DefaultCreateOwn';
-        $contentWebDefaultCreateOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultCreateOwn);
-        $auth->addChild($admin, $contentWebDefaultCreateOwn);
-        $contentWebDefaultCreate = $auth->getPermission('contentWebDefaultCreate');
-        $auth->addChild($contentWebDefaultCreateOwn, $contentWebDefaultCreate);
 
-        $contentWebDefaultUpdateOwn = $auth->createPermission('contentWebDefaultUpdateOwn');
-        $contentWebDefaultUpdateOwn->description = 'Content Web DefaultUpdateOwn';
-        $contentWebDefaultUpdateOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultUpdateOwn);
-        $auth->addChild($admin, $contentWebDefaultUpdateOwn);
-        $contentWebDefaultUpdate = $auth->getPermission('contentWebDefaultUpdate');
-        $auth->addChild($contentWebDefaultUpdateOwn, $contentWebDefaultUpdate);
+        $todoWebtaskIndexOwn = $auth->createPermission('todoWebtaskIndexOwn');//"todoWebtaskIndexOwn" adında bir izin nesnesi oluşturur
+        $todoWebtaskIndexOwn->description = 'todo Web taskIndexOwn';
+        $auth->add($todoWebtaskIndexOwn);//Oluşturulan izin nesnesini yetkilendirme sistemi içinde kaydeder
+        $auth->addChild($admin, $todoWebtaskIndexOwn);//"admin" adında bir rol ile "todoWebtaskIndexOwn" iznini ilişkilendirir. Yani, "admin" rolü bu izne sahip olur.
+        $auth->addChild($user, $todoWebtaskIndexOwn); //"user" adında bir rol ile "todoWebtaskIndexOwn" iznini ilişkilendirir. Yani, "admin" rolü bu izne sahip olur.
 
-        $contentWebDefaultDeleteOwn = $auth->createPermission('contentWebDefaultDeleteOwn');
-        $contentWebDefaultDeleteOwn->description = 'Content Web DefaultDeleteOwn';
-        $contentWebDefaultDeleteOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultDeleteOwn);
-        $auth->addChild($admin, $contentWebDefaultDeleteOwn);
-        $contentWebDefaultDelete = $auth->getPermission('contentWebDefaultDelete');
-        $auth->addChild($contentWebDefaultDeleteOwn, $contentWebDefaultDelete);
+        $todoWebtaskViewOwn = $auth->createPermission('todoWebtaskViewOwn');
+        $todoWebtaskViewOwn->description = 'todo Web taskViewOwn';
+        $todoWebtaskViewOwn->ruleName = $rule->name;
+        $auth->add($todoWebtaskViewOwn);
+        $auth->addChild($admin, $todoWebtaskViewOwn);
+        $auth->addChild($user, $todoWebtaskViewOwn);
 
-        $contentWebCategoryIndexOwn = $auth->createPermission('contentWebCategoryIndexOwn');
-        $contentWebCategoryIndexOwn->description = 'Content Web CategoryIndexOwn';
-        $auth->add($contentWebCategoryIndexOwn);
-        $auth->addChild($admin, $contentWebCategoryIndexOwn);
+        $todoWebtaskView = $auth->getPermission('todoWebtaskView');
+        $auth->addChild($todoWebtaskViewOwn, $todoWebtaskView);
 
-        $contentWebCategoryViewOwn = $auth->createPermission('contentWebCategoryViewOwn');
-        $contentWebCategoryViewOwn->description = 'Content Web CategoryViewOwn';
-        $contentWebCategoryViewOwn->ruleName = $rule->name;
-        $auth->add($contentWebCategoryViewOwn);
-        $auth->addChild($admin, $contentWebCategoryViewOwn);
-        $contentWebCategoryView = $auth->getPermission('contentWebCategoryView');
-        $auth->addChild($contentWebCategoryViewOwn, $contentWebCategoryView);
+        $todoWebtaskCreateOwn = $auth->createPermission('todoWebtaskCreateOwn');
+        $todoWebtaskCreateOwn->description = 'todoWeb taskCreateOwn';
 
-        $contentWebCategoryCreateOwn = $auth->createPermission('contentWebCategoryCreateOwn');
-        $contentWebCategoryCreateOwn->description = 'Content Web CategoryCreateOwn';
-        $contentWebCategoryCreateOwn->ruleName = $rule->name;
-        $auth->add($contentWebCategoryCreateOwn);
-        $auth->addChild($admin, $contentWebCategoryCreateOwn);
-        $contentWebCategoryCreate = $auth->getPermission('contentWebCategoryCreate');
-        $auth->addChild($contentWebCategoryCreateOwn, $contentWebCategoryCreate);
+        $auth->add($todoWebtaskCreateOwn);
+        $auth->addChild($admin, $todoWebtaskCreateOwn);
+        $auth->addChild($user, $todoWebtaskCreateOwn);
 
-        $contentWebCategoryUpdateOwn = $auth->createPermission('contentWebCategoryUpdateOwn');
-        $contentWebCategoryUpdateOwn->description = 'Content Web CategoryUpdateOwn';
-        $contentWebCategoryUpdateOwn->ruleName = $rule->name;
-        $auth->add($contentWebCategoryUpdateOwn);
-        $auth->addChild($admin, $contentWebCategoryUpdateOwn);
-        $contentWebCategoryUpdate = $auth->getPermission('contentWebCategoryUpdate');
-        $auth->addChild($contentWebCategoryUpdateOwn, $contentWebCategoryUpdate);
+        $todoWebtaskCreate = $auth->getPermission('todoWebtaskCreate');
+        $auth->addChild($todoWebtaskCreateOwn, $todoWebtaskCreate);
 
-        $contentWebCategoryDeleteOwn = $auth->createPermission('contentWebCategoryDeleteOwn');
-        $contentWebCategoryDeleteOwn->description = 'Content Web CategoryDeleteOwn';
-        $contentWebCategoryDeleteOwn->ruleName = $rule->name;
-        $auth->add($contentWebCategoryDeleteOwn);
-        $auth->addChild($admin, $contentWebCategoryDeleteOwn);
-        $contentWebCategoryDelete = $auth->getPermission('contentWebCategoryDelete');
-        $auth->addChild($contentWebCategoryDeleteOwn, $contentWebCategoryDelete);
+        $todoWebtaskUpdateOwn = $auth->createPermission('todoWebtaskUpdateOwn');
+        $todoWebtaskUpdateOwn->description = 'todo Web taskUpdateOwn';
+        $todoWebtaskUpdateOwn->ruleName = $rule->name;
+        $auth->add($todoWebtaskUpdateOwn);
+        $auth->addChild($admin, $todoWebtaskUpdateOwn);
+        $auth->addChild($user, $todoWebtaskUpdateOwn);
 
-        $contentApiDefaultViewOwn = $auth->createPermission('contentApiDefaultViewOwn');
-        $contentApiDefaultViewOwn->description = 'Content Api DefaultViewOwn';
-        $contentApiDefaultViewOwn->ruleName = $rule->name;
-        $auth->add($contentApiDefaultViewOwn);
-        $auth->addChild($admin, $contentApiDefaultViewOwn);
-        $contentApiDefaultView = $auth->getPermission('contentApiDefaultView');
-        $auth->addChild($contentApiDefaultViewOwn, $contentApiDefaultView);
+        $todoWebtaskUpdate = $auth->getPermission('todoWebtaskUpdate');
+        $auth->addChild($todoWebtaskUpdateOwn, $todoWebtaskUpdate);
 
-        $contentApiDefaultCreateOwn = $auth->createPermission('contentApiDefaultCreateOwn');
-        $contentApiDefaultCreateOwn->description = 'Content Api DefaultCreateOwn';
-        $contentApiDefaultCreateOwn->ruleName = $rule->name;
-        $auth->add($contentApiDefaultCreateOwn);
-        $auth->addChild($admin, $contentApiDefaultCreateOwn);
-        $contentApiDefaultCreate = $auth->getPermission('contentApiDefaultCreate');
-        $auth->addChild($contentApiDefaultCreateOwn, $contentApiDefaultCreate);
+        $todoWebtaskDeleteOwn = $auth->createPermission('todoWebtaskDeleteOwn');
+        $todoWebtaskDeleteOwn->description = 'todo Web taskDeleteOwn';
+        $todoWebtaskDeleteOwn->ruleName = $rule->name;
+        $auth->add($todoWebtaskDeleteOwn);
+        $auth->addChild($admin, $todoWebtaskDeleteOwn);
+        $auth->addChild($user, $todoWebtaskDeleteOwn);
 
-        $contentApiDefaultUpdateOwn = $auth->createPermission('contentApiDefaultUpdateOwn');
-        $contentApiDefaultUpdateOwn->description = 'Content Api DefaultUpdateOwn';
-        $contentApiDefaultUpdateOwn->ruleName = $rule->name;
-        $auth->add($contentApiDefaultUpdateOwn);
-        $auth->addChild($admin, $contentApiDefaultUpdateOwn);
-        $contentApiDefaultUpdate = $auth->getPermission('contentApiDefaultUpdate');
-        $auth->addChild($contentApiDefaultUpdateOwn, $contentApiDefaultUpdate);
+        $todoWebtaskDelete = $auth->getPermission('todoWebtaskDelete');
+        $auth->addChild($todoWebtaskDeleteOwn, $todoWebtaskDelete);
 
-        $contentApiDefaultDeleteOwn = $auth->createPermission('contentApiDefaultDeleteOwn');
-        $contentApiDefaultDeleteOwn->description = 'Content Api DefaultDeleteOwn';
-        $contentApiDefaultDeleteOwn->ruleName = $rule->name;
-        $auth->add($contentApiDefaultDeleteOwn);
-        $auth->addChild($admin, $contentApiDefaultDeleteOwn);
-        $contentApiDefaultDelete = $auth->getPermission('contentApiDefaultDelete');
-        $auth->addChild($contentApiDefaultDeleteOwn, $contentApiDefaultDelete);
 
-        $contentApiDefaultIndexOwn = $auth->createPermission('contentApiDefaultIndexOwn');
-        $contentApiDefaultIndexOwn->description = 'Content Api DefaultIndexOwn';
-        $auth->add($contentApiDefaultIndexOwn);
-        $auth->addChild($admin, $contentApiDefaultIndexOwn);
 
-        $contentWebDefaultPreviewOwn = $auth->createPermission('contentWebDefaultPreviewOwn');
-        $contentWebDefaultPreviewOwn->description = 'Content Web DefaultPreviewOwn';
-        $contentWebDefaultPreviewOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultPreviewOwn);
-        $auth->addChild($admin, $contentWebDefaultPreviewOwn);
-        $contentWebDefaultPreview = $auth->getPermission('contentWebDefaultPreview');
-        $auth->addChild($contentWebDefaultPreviewOwn, $contentWebDefaultPreview);
+        $todoApitaskViewOwn = $auth->createPermission('todoApitaskViewOwn');
+        $todoApitaskViewOwn->description = 'todo Api task View Own';
+        $todoApitaskViewOwn->ruleName = $rule->name;
+        $auth->add($todoApitaskViewOwn);
+        $auth->addChild($admin, $todoApitaskViewOwn);
+        $auth->addChild($user, $todoApitaskViewOwn);
 
-        $contentWebDefaultShowOwn = $auth->createPermission('contentWebDefaultShowOwn');
-        $contentWebDefaultShowOwn->description = 'Content Web DefaultShowOwn';
-        $contentWebDefaultShowOwn->ruleName = $rule->name;
-        $auth->add($contentWebDefaultShowOwn);
-        $auth->addChild($admin, $contentWebDefaultShowOwn);
-        $contentWebDefaultShow = $auth->getPermission('contentWebDefaultShow');
-        $auth->addChild($contentWebDefaultShowOwn, $contentWebDefaultShow);
+        $todoApitaskView = $auth->getPermission('todoApitaskView');
+        $auth->addChild($todoApitaskViewOwn, $todoApitaskView);
 
-        $contentApiCategoryViewOwn = $auth->createPermission('contentApiCategoryViewOwn');
-        $contentApiCategoryViewOwn->description = 'Content Api Category View Own';
-        $contentApiCategoryViewOwn->ruleName = $rule->name;
-        $auth->add($contentApiCategoryViewOwn);
-        $auth->addChild($admin, $contentApiCategoryViewOwn);
-        $contentApiCategoryView = $auth->getPermission('contentApiCategoryView');
-        $auth->addChild($contentApiCategoryViewOwn, $contentApiCategoryView);
+        $todoApitaskCreateOwn = $auth->createPermission('todoApitaskCreateOwn');
+        $todoApitaskCreateOwn->description = 'todo Api task Create Own';
+        $todoApitaskCreateOwn->ruleName = $rule->name;
+        $auth->add($todoApitaskCreateOwn);
+        $auth->addChild($admin, $todoApitaskCreateOwn);
+        $auth->addChild($user, $todoApitaskCreateOwn);
 
-        $contentApiCategoryCreateOwn = $auth->createPermission('contentApiCategoryCreateOwn');
-        $contentApiCategoryCreateOwn->description = 'Content Api Category Create Own';
-        $contentApiCategoryCreateOwn->ruleName = $rule->name;
-        $auth->add($contentApiCategoryCreateOwn);
-        $auth->addChild($admin, $contentApiCategoryCreateOwn);
-        $contentApiCategoryCreate = $auth->getPermission('contentApiCategoryCreate');
-        $auth->addChild($contentApiCategoryCreateOwn, $contentApiCategoryCreate);
+        $todoApitaskCreate = $auth->getPermission('todoApitaskCreate');
+        $auth->addChild($todoApitaskCreateOwn, $todoApitaskCreate);
 
-        $contentApiCategoryUpdateOwn = $auth->createPermission('contentApiCategoryUpdateOwn');
-        $contentApiCategoryUpdateOwn->description = 'Content Api Category Update Own';
-        $contentApiCategoryUpdateOwn->ruleName = $rule->name;
-        $auth->add($contentApiCategoryUpdateOwn);
-        $auth->addChild($admin, $contentApiCategoryUpdateOwn);
-        $contentApiCategoryUpdate = $auth->getPermission('contentApiCategoryUpdate');
-        $auth->addChild($contentApiCategoryUpdateOwn, $contentApiCategoryUpdate);
+        $todoApitaskUpdateOwn = $auth->createPermission('todoApitaskUpdateOwn');
+        $todoApitaskUpdateOwn->description = 'todo Api task Update Own';
+        $todoApitaskUpdateOwn->ruleName = $rule->name;
+        $auth->add($todoApitaskUpdateOwn);
+        $auth->addChild($admin, $todoApitaskUpdateOwn);
+        $auth->addChild($user, $todoApitaskUpdateOwn);
 
-        $contentApiCategoryDeleteOwn = $auth->createPermission('contentApiCategoryDeleteOwn');
-        $contentApiCategoryDeleteOwn->description = 'Content Api Category Delete Own';
-        $contentApiCategoryDeleteOwn->ruleName = $rule->name;
-        $auth->add($contentApiCategoryDeleteOwn);
-        $auth->addChild($admin, $contentApiCategoryDeleteOwn);
-        $contentApiCategoryDelete = $auth->getPermission('contentApiCategoryDelete');
-        $auth->addChild($contentApiCategoryDeleteOwn, $contentApiCategoryDelete);
+        $todoApitaskUpdate = $auth->getPermission('todoApitaskUpdate');
+        $auth->addChild($todoApitaskUpdateOwn, $todoApitaskUpdate);
 
-        $contentApiCategoryIndexOwn = $auth->createPermission('contentApiCategoryIndexOwn');
-        $contentApiCategoryIndexOwn->description = 'Content Api Category Index Own';
-        $auth->add($contentApiCategoryIndexOwn);
-        $auth->addChild($admin, $contentApiCategoryIndexOwn);
+        $todoApitaskDeleteOwn = $auth->createPermission('todoApitaskDeleteOwn');
+        $todoApitaskDeleteOwn->description = 'todo Api task Delete Own';
+        $todoApitaskDeleteOwn->ruleName = $rule->name;
+        $auth->add($todoApitaskDeleteOwn);
+        $auth->addChild($admin, $todoApitaskDeleteOwn);
+        $auth->addChild($user, $todoApitaskDeleteOwn);
+
+        $todoApitaskDelete = $auth->getPermission('todoApitaskDelete');
+        $auth->addChild($todoApitaskDeleteOwn, $todoApitaskDelete);
+
+        $todoApitaskIndexOwn = $auth->createPermission('todoApitaskIndexOwn');
+        $todoApitaskIndexOwn->description = 'todo Api task Index Own';
+        $auth->add($todoApitaskIndexOwn);
+        $auth->addChild($admin, $todoApitaskIndexOwn);
+        $auth->addChild($user, $todoApitaskIndexOwn);
 
     }
 
@@ -184,22 +118,11 @@ class m211115_010203_task_rule_rbac extends Migration
     {
         $auth = \Yii::$app->authManager;
 
-        $auth->remove($auth->getPermission('contentOwnWebDefaultIndex'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultView'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultShow'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultCreate'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultUpdate'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultDelete'));
-        $auth->remove($auth->getPermission('contentOwnWebCategoryIndex'));
-        $auth->remove($auth->getPermission('contentOwnWebCategoryView'));
-        $auth->remove($auth->getPermission('contentOwnWebCategoryCreate'));
-        $auth->remove($auth->getPermission('contentOwnWebCategoryUpdate'));
-        $auth->remove($auth->getPermission('contentOwnWebCategoryDelete'));
-        $auth->remove($auth->getPermission('contentOwnApiDefaultView'));
-        $auth->remove($auth->getPermission('contentOwnApiDefaultCreate'));
-        $auth->remove($auth->getPermission('contentOwnApiDefaultUpdate'));
-        $auth->remove($auth->getPermission('contentOwnApiDefaultDelete'));
-        $auth->remove($auth->getPermission('contentOwnWebDefaultPreview'));
-        $auth->remove($auth->getPermission('contentOwnApiDefaultIndex'));
-    } */
+        $auth->remove($auth->getPermission('todoOwnWebtaskIndex'));
+        $auth->remove($auth->getPermission('todoOwnWebtaskView'));
+        $auth->remove($auth->getPermission('todoOwnWebtaskCreate'));
+        $auth->remove($auth->getPermission('todoOwnWebtaskUpdate'));
+        $auth->remove($auth->getPermission('todoOwnWebtaskDelete'));
+
+    }
 }

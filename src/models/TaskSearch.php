@@ -2,6 +2,7 @@
 
 namespace portalium\todo\models;
 
+use portalium\user\Module;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use portalium\todo\models\Task;
@@ -11,6 +12,7 @@ use portalium\todo\models\Task;
  */
 class TaskSearch extends Task
 {
+    public $username;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class TaskSearch extends Task
     {
         return [
             [['id_task', 'status', 'id_user', 'id_workspace'], 'integer'],
-            [['title', 'description', 'date_create', 'date_update'], 'safe'],
+            [['title', 'description', 'date_create', 'date_update', 'username'], 'safe'],
         ];
     }
 
@@ -43,10 +45,15 @@ class TaskSearch extends Task
         $query = Task::find();
 
         // add conditions that should always apply here
-
+        $query->joinWith(['user']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['username'] = [
+            'asc' => ['user.username' => SORT_ASC],
+            'desc' => ['user.username' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -67,7 +74,9 @@ class TaskSearch extends Task
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', Module::$tablePrefix . 'user.username', $this->username]);
+
 
         return $dataProvider;
     }

@@ -7,12 +7,12 @@ use portalium\theme\widgets\ActionColumn;
 use portalium\theme\widgets\GridView;
 use portalium\theme\widgets\Panel;
 use portalium\content\Module;
-
 /** @var portalium\todo\models\TaskSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Tasks');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="task-index">
 
@@ -30,14 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             //'id_task',
             'title',
            // 'description',
-           // 'status',
-            'id_user',
+            //'status',
+           // 'id_user',
+
+            [
+                'attribute' => 'username',
+                'value' => 'user.username'
+            ],
             //'id_workspace',
             //'date_create',
             //'date_update',
