@@ -1,13 +1,13 @@
 <?php
 
-use portalium\todo\models\Task;
+use alperenbugaz\todo\models\Task;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use portalium\theme\widgets\ActionColumn;
 use portalium\theme\widgets\GridView;
 use portalium\theme\widgets\Panel;
 use portalium\content\Module;
-/** @var portalium\todo\models\TaskSearch $searchModel */
+/** @var alperenbugaz\todo\models\TaskSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Tasks');

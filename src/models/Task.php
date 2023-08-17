@@ -1,6 +1,6 @@
 <?php
 
-namespace portalium\todo\models;
+namespace alperenbugaz\todo\models;
 
 use portalium\content\Module;
 use Yii;
