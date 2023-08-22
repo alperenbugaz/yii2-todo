@@ -20,7 +20,8 @@ class Module extends \portalium\base\Module
             'controller' => [
                 'todo/default',
                 'todo/task',
-            ]
+            ],
+            'pluralize' => false
         ],
 
     ];
