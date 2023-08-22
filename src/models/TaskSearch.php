@@ -1,11 +1,12 @@
 <?php
 
-namespace portalium\todo\models;
+namespace alperenbugaz\todo\models;
 
 use portalium\user\Module;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use portalium\todo\models\Task;
+use alperenbugaz\todo\models\Task;
+
 
 /**
  * TaskSearch represents the model behind the search form of `portalium\todo\models\Task`.

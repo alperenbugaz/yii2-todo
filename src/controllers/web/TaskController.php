@@ -1,10 +1,10 @@
 <?php
 
-namespace portalium\todo\controllers\web;
+namespace alperenbugaz\todo\controllers\web;
 use Yii;
 use alperenbugaz\todo\Module;
-use portalium\todo\models\Task;
-use portalium\todo\models\TaskSearch;
+use alperenbugaz\todo\models\Task;
+use alperenbugaz\todo\models\TaskSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use portalium\web\Controller as WebController;

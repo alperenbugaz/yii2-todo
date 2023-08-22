@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var portalium\todo\models\Task $model */
+/** @var alperenbugaz\todo\models\Task $model */
 
 $this->title = Yii::t('app', 'Update Task: {name}', [
     'name' => $model->title,

@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use portalium\theme\widgets\DetailView;
-use portalium\todo\models\Task;
+use alperenbugaz\todo\models\Task;
 use portalium\content\Module;
 use portalium\theme\widgets\Panel;
 /** @var yii\web\View $this */
-/** @var portalium\todo\models\Task $model */
+/** @var alperenbugaz\todo\models\Task $model */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tasks'), 'url' => ['index']];

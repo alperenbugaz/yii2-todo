@@ -1,10 +1,10 @@
 <?php
 
 namespace alperenbugaz\todo;
-
+use portalium\user\Module as UserModule;
 use portalium\base\Event;
 use alperenbugaz\todo\components\TriggerActions;
-
+use yii;
 class Module extends \portalium\base\Module
 {
     public static $tablePrefix = 'todo_';
@@ -15,11 +15,15 @@ class Module extends \portalium\base\Module
 
     public $apiRules = [
         [
+
             'class' => 'yii\rest\UrlRule',
             'controller' => [
                 'todo/default',
-            ]
+                'todo/task',
+            ],
+            'pluralize' => false
         ],
+
     ];
     
     public static function moduleInit()

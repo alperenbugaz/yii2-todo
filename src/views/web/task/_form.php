@@ -2,11 +2,11 @@
 
 use yii\helpers\Html;
 use portalium\theme\widgets\ActiveForm;
-use portalium\todo\models\Task;
+use alperenbugaz\todo\models\Task;
 use portalium\theme\widgets\Panel;
 use portalium\content\Module;
 /** @var yii\web\View $this */
-/** @var portalium\todo\models\Task $model */
+/** @var alperenbugaz\todo\models\Task $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
